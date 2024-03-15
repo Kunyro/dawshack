@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import os
 
+# find dominant color in image using k-means clustering (3 by default)
 def dominant_color(path):
     img = cv2.imread(os.path.join(path))
 
@@ -32,7 +33,9 @@ def dominant_color(path):
     cv2.imshow('Dominant Colors', img_bar)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+    return rgb_values
 
+# create bar for dominant color visualization
 def create_bar(height, width, color):
     bar = np.zeros((height, width, 3), np.uint8)
     bar[:] = color
@@ -41,4 +44,4 @@ def create_bar(height, width, color):
 
     return bar, (red, green, blue)
 
-#dominant_color('/Users/johakimfb/Code/dawshack/images/bizarre.png')
+print(dominant_color('/Users/johakimfb/Code/dawshack/images/tank.jpg'))
