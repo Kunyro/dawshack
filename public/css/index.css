@@ -37,12 +37,3 @@ html, body, div, img {
     width: 100%;
     transition: filter 0.3s;
 }
-/* Blur effect on the album cover when hovering over it */
-/* .albumCoverItem:hover {
-    filter: blur(8px);
-} */
-
-/* Keeps the cover blurred even when hovering text */
-.albumContainer:hover .albumCoverItem {
-    filter: blur(8px);
-}
