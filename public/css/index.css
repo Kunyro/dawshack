@@ -14,7 +14,7 @@ html, body, div, img {
     line-height: 0;
 }
 /* Flexbox to create the main album gallery */
-.albumGalleryContainer {
+.albumMosaicContainer {
     display: flex;
     flex-wrap: wrap;
     /* This is to prevent white space on right of the screen when hovering album on the right */
