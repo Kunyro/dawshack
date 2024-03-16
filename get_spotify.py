@@ -26,15 +26,21 @@ class Get_spotify():
         url = "https://api.spotify.com/v1/albums/" + id
         r = requests.get(url, headers={'Authorization': token})  
         results = r.json()
-        return results['images']
-    
-# EXAMPLE of how to use the object to get the album cover of given spotify album id
-# gs = Get_spotify()
-# result = gs.get_album('3Gt7rOjcZQoHCfnKl5AkK7', gs.token)
-# print(result[1]['url'])
+        return results['images']  
     
     def get_random_album(self, token, limit, search_type):
-        
+        """gets random album cover with limit of 50 and search type (ex: album, artist...) look on Spotify api search
+        on what is available
+
+        Args:
+            token (string): generated authorization token
+            limit (int): integer from 1 to 50 of how many albums we want
+            search_type (string): spotify api search type parameter
+
+        Returns:
+            list<dict>: returns a list of dictionaries that contains
+            name: album name, image: cover url, link_to_album: spotify link
+        """
         if limit > 50:
             limit = 50
         url = 'https://api.spotify.com/v1/search?'
@@ -48,10 +54,7 @@ class Get_spotify():
         r = requests.get(url, headers={'Authorization': token})  
         results = r.json()
         for album in results['albums']['items']:
-            images.append(album['images'][1]['url'])
-        
+            images.append({'name': album['name'], 'image': album['images'][2]['url'], 'link_to_album': album['external_urls']['spotify']})
+            #in image: change the integer to 0 for a 640x640 image, 1 for 300x300 and 2 for 64x64
         return images
-    
-gs = Get_spotify()
-print(gs.get_random_album(gs.token, 5, 'album'))
         
