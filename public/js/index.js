@@ -1,11 +1,9 @@
 $(function(){
-    $.get('/data', { timeout: 30000 }, function(data) {
-        // data.forEach((album) => {
-        //     const img = album.image;
-        //     const link = album.link_to_album;
-        //     createAlbum(img, link);
+    $.get('/data', function(data) {
+        console.log(data)
+        // data.forEach(element => {
+        //     createAlbum(element.image, element.link_to_album);
         // });
-        console.log(data);
     });
 });
 

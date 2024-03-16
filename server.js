@@ -17,13 +17,14 @@ app.get("/", (req, res) => {
 });
 
 app.get("/data", (req, res) => {
-  PythonShell.run(('./a.py'), null, (err, results) => {
+  PythonShell.run('./spotify_to_color.py', null, (err, results) => {
     if (err) {
-      console.error('Error running Python script:', err);
-    } else {
-      console.log(results); 
-      // res.json(results);
+      console.error('Error: ', err);
+      return;
     }
+    // Implement python to retrieve data from the spotify api
+    const data = JSON.parse(results[0]);
+    res.json(data);
   });
 });
 
