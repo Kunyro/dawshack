@@ -1,0 +1,39 @@
+/* CSS reset */
+* {
+    box-sizing: border-box;
+}
+html, body, div, img {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    font-family: "Noto Serif", serif;
+    vertical-align: baseline;
+    /* Removes weird spacing between vertical divs */
+    line-height: 0;
+}
+/* Flexbox to create the main album gallery */
+.albumMosaicContainer {
+    display: flex;
+    flex-wrap: wrap;
+    /* This is to prevent white space on right of the screen when hovering album on the right */
+    overflow: hidden;
+}
+/* This is a div containing the album cover and text */
+.albumContainer {
+    /* Since writting 33.33% is kinda ugly */
+    width: calc(100% / 3);
+    position: relative;
+    transition: transform 0.3s;
+}
+/* Enlargen effect when hovering on a specific album */
+.albumContainer:hover {
+    z-index: 2;
+    transform: scale(1.1);
+}
+/* This is the actual img of the album cover width is 100 so that it occupies the full div */
+.albumCoverItem {
+    width: 100%;
+    transition: filter 0.3s;
+}

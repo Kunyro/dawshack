@@ -2,6 +2,7 @@
 .git
 # python env
 .dawshack/
+.venv/
 
 # Logs
 logs
