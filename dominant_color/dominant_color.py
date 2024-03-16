@@ -2,10 +2,14 @@
 import cv2
 import numpy as np
 import os
+import urllib.request
 
 # find dominant color in image using k-means clustering (3 by default)
-def dominant_color(path):
-    img = cv2.imread(os.path.join(path))
+def dominant_color(url):
+    # this is to transform the url to an img for cv2
+    req = urllib.request.urlopen(url)
+    arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
+    img = cv2.imdecode(arr, -1) # 'Load it as it is'
 
     height, width, _ = np.shape(img)
     print("Height: ", height, "\tWidth: ", width, "\n")
@@ -44,4 +48,4 @@ def create_bar(height, width, color):
 
     return bar, (red, green, blue)
 
-print(dominant_color('/Users/johakimfb/Code/dawshack/images/tank.jpg'))
+print(dominant_color('https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228'))
