@@ -49,10 +49,10 @@ def dominant_color(url):
 
     img_bar = np.hstack(bars)
 
-    #cv2.imshow('Image', img)
-    #cv2.imshow('Dominant Colors', img_bar)
-    #cv2.waitKey(0)
-    #cv2.destroyAllWindows()
+    # cv2.imshow('Image', img)
+    # cv2.imshow('Dominant Colors', img_bar)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
     return rgb_values
 
 # create bar for dominant color visualization
@@ -89,7 +89,7 @@ def color_sort(url_rgb):
     for hsv_value in sorted_hsv_values:
         for url in url_rgb:
             if colorsys.rgb_to_hsv(url["dominant_color"][0][0], url["dominant_color"][0][1], url["dominant_color"][0][2]) == hsv_value:
-                sorted_url_rgb.append(rgb)
+                sorted_url_rgb.append(url)
 
     return sorted_url_rgb
 

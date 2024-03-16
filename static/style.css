@@ -24,7 +24,7 @@ html, body, div, img {
 /* This is a div containing the album cover and text */
 .albumContainer {
     /* Since writting 33.33% is kinda ugly */
-    width: calc(100% / 3);
+    width: calc(100% / 10);
     position: relative;
     transition: transform 0.3s;
 }
