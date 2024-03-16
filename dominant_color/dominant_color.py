@@ -10,15 +10,15 @@ import urllib.request
 # sort images by dominant color
 # TODO implement the rgb sorting
 def sort_images_by_color(url_list):
-    url_rgb = {}
+    #url_rgb = {}
     for url in url_list:
-        url_rgb[url] = dominant_color(url)
-
+        url["dominant_color"] = dominant_color(url["image"])
+        
     print("\n")
-    print("Items ", url_rgb.values())
+    # print("Items ", url_rgb.values())
     #sorted_url_rgb = sorted(url_rgb.values(), key=lambda x: x[1])
 
-    return color_sort(url_rgb)
+    return color_sort(url_list)
 
 # find dominant color in image using k-means clustering (3 by default)
 def dominant_color(url):
@@ -49,10 +49,10 @@ def dominant_color(url):
 
     img_bar = np.hstack(bars)
 
-    cv2.imshow('Image', img)
-    cv2.imshow('Dominant Colors', img_bar)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    #cv2.imshow('Image', img)
+    #cv2.imshow('Dominant Colors', img_bar)
+    #cv2.waitKey(0)
+    #cv2.destroyAllWindows()
     return rgb_values
 
 # create bar for dominant color visualization
@@ -77,26 +77,26 @@ def step (r,g,b, repetitions=1):
 def color_sort(url_rgb):
     # Convert RGB values to HSV values
     hsv_values = []
-    for rgb in url_rgb.values():
-        print(rgb[0])
-        hsv_values.append(colorsys.rgb_to_hsv(rgb[0][0], rgb[0][1], rgb[0][2]))
+    for rgb in url_rgb:
+        print(rgb["dominant_color"][0])
+        hsv_values.append(colorsys.rgb_to_hsv(rgb["dominant_color"][0][0], rgb["dominant_color"][0][1], rgb["dominant_color"][0][2]))
 
     # Sort HSV values by hue, saturation, and value
     sorted_hsv_values = sorted(hsv_values, key=lambda x: (x[0], x[1], x[2]))
 
     # Sort dictionary by sorted HSV values
-    sorted_url_rgb = {}
+    sorted_url_rgb = []
     for hsv_value in sorted_hsv_values:
-        for url, rgb in url_rgb.items():
-            if colorsys.rgb_to_hsv(rgb[0][0], rgb[0][1], rgb[0][2]) == hsv_value:
-                sorted_url_rgb[url] = rgb
+        for url in url_rgb:
+            if colorsys.rgb_to_hsv(url["dominant_color"][0][0], url["dominant_color"][0][1], url["dominant_color"][0][2]) == hsv_value:
+                sorted_url_rgb.append(rgb)
 
     return sorted_url_rgb
 
 #print(dominant_color('https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/1a/c2/1a/1ac21a9d-3ffd-3f80-dc96-223622b50b5f/Madvillainy.jpg/600x600bb.jpg'))
 
-print(sort_images_by_color([
-    'https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/1a/c2/1a/1ac21a9d-3ffd-3f80-dc96-223622b50b5f/Madvillainy.jpg/600x600bb.jpg',
-    'https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228',
-    'https://i.ytimg.com/vi/SxgsofgCjFQ/hqdefault.jpg?sqp=-oaymwE2CNACELwBSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgBzgWAAtAFigIMCAAQARh_IB8oEzAP&rs=AOn4CLATEtVInjnXoK2W8WNsjKexe3iQuQ'
-    ]))
+# print(sort_images_by_color([
+#     'https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/1a/c2/1a/1ac21a9d-3ffd-3f80-dc96-223622b50b5f/Madvillainy.jpg/600x600bb.jpg',
+#     'https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228',
+#     'https://i.ytimg.com/vi/SxgsofgCjFQ/hqdefault.jpg?sqp=-oaymwE2CNACELwBSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgBzgWAAtAFigIMCAAQARh_IB8oEzAP&rs=AOn4CLATEtVInjnXoK2W8WNsjKexe3iQuQ'
+#     ]))
