@@ -1,4 +1,7 @@
 # taken from tutorial here: https://www.youtube.com/watch?v=90s4SomOSa0
+# and then modified
+import colorsys
+import math
 import cv2
 import numpy as np
 import os
@@ -11,8 +14,11 @@ def sort_images_by_color(url_list):
     for url in url_list:
         url_rgb[url] = dominant_color(url)
 
-    sorted_url_rgb = sorted(url_rgb.items(), key=lambda x: x[1])
-    return sorted_url_rgb
+    print("\n")
+    print("Items ", url_rgb.values())
+    #sorted_url_rgb = sorted(url_rgb.values(), key=lambda x: x[1])
+
+    return color_sort(url_rgb)
 
 # find dominant color in image using k-means clustering (3 by default)
 def dominant_color(url):
@@ -27,7 +33,7 @@ def dominant_color(url):
     data = np.reshape(img, (height * width, 3))
     data = np.float32(data)
 
-    num_clusters = 3
+    num_clusters = 1
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
     flags = cv2.KMEANS_RANDOM_CENTERS
     compactness, labels, centers = cv2.kmeans(data, num_clusters, None, criteria, 20, flags)
@@ -57,6 +63,35 @@ def create_bar(height, width, color):
     print("Red: ", red, "\tGreen: ", green, "\tBlue: ", blue, "\n")
 
     return bar, (red, green, blue)
+
+# https://www.alanzucconi.com/2015/09/30/colour-sorting/
+# rgb sorting by step (DO NOT ASK HOW THIS WORKS)
+def step (r,g,b, repetitions=1):
+    lum = math.sqrt( .241 * r + .691 * g + .068 * b )
+    h, s, v = colorsys.rgb_to_hsv(r,g,b)
+    h2 = int(h * repetitions)
+    lum2 = int(lum * repetitions)
+    v2 = int(v * repetitions)
+    return (h2, lum, v2)
+
+def color_sort(url_rgb):
+    # Convert RGB values to HSV values
+    hsv_values = []
+    for rgb in url_rgb.values():
+        print(rgb[0])
+        hsv_values.append(colorsys.rgb_to_hsv(rgb[0][0], rgb[0][1], rgb[0][2]))
+
+    # Sort HSV values by hue, saturation, and value
+    sorted_hsv_values = sorted(hsv_values, key=lambda x: (x[0], x[1], x[2]))
+
+    # Sort dictionary by sorted HSV values
+    sorted_url_rgb = {}
+    for hsv_value in sorted_hsv_values:
+        for url, rgb in url_rgb.items():
+            if colorsys.rgb_to_hsv(rgb[0][0], rgb[0][1], rgb[0][2]) == hsv_value:
+                sorted_url_rgb[url] = rgb
+
+    return sorted_url_rgb
 
 #print(dominant_color('https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/1a/c2/1a/1ac21a9d-3ffd-3f80-dc96-223622b50b5f/Madvillainy.jpg/600x600bb.jpg'))
 
