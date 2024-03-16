@@ -1,5 +1,6 @@
 # python env
 .dawshack/
+.venv/
 
 # Logs
 logs
