@@ -1,4 +1,4 @@
-import requests, random, string 
+import requests, random, string
 
 class Get_spotify():
     

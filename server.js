@@ -17,19 +17,14 @@ app.get("/", (req, res) => {
 });
 
 app.get("/data", (req, res) => {
-  // PythonShell.run(path.join(__dirname, 'sample', 'path'), null, (err, results) => {
-  //   if (err) {
-  //     console.error('Error: ', err);
-  //     return;
-  //   }
-    // Implement python to retrieve data from the spotify api
-    // const data = {
-    //   img: results[0],
-    //   title: results[1],
-    //   artist: results[2]
-    // };
-    // res.json(data);
-  // });
+  PythonShell.run(('./a.py'), null, (err, results) => {
+    if (err) {
+      console.error('Error running Python script:', err);
+    } else {
+      console.log(results); 
+      // res.json(results);
+    }
+  });
 });
 
 app.post("/get_dominant_color", (req, res) => {

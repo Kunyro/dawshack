@@ -1,11 +1,12 @@
 $(function(){
-    // $.get('/data', function(data) {
-    //     const img = data.img;
-    //     const title = data.title;
-    //     const artist = data.artist;
-    //     createAlbum(img, title, artist);
-    // })
-    createAlbum("https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Jamie_Kalven_%28cropped%29.jpg/210px-Jamie_Kalven_%28cropped%29.jpg", "https://open.spotify.com/album/71O60S5gIJSIAhdnrDIh3N");
+    $.get('/data', { timeout: 30000 }, function(data) {
+        // data.forEach((album) => {
+        //     const img = album.image;
+        //     const link = album.link_to_album;
+        //     createAlbum(img, link);
+        // });
+        console.log(data);
+    });
 });
 
 function createAlbum(img, link) {
